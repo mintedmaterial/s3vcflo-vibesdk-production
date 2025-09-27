@@ -54,7 +54,7 @@
     "dispatch_namespaces": [
         {
             "binding": "DISPATCHER",
-            "namespace": "vibesdk-default-namespace",
+            "namespace": "s3vcflo-vibesdk-default-namespace",
             "remote": true
         }
     ],
@@ -65,11 +65,7 @@
             // Altering max_instances value will have no effect. Please use the MAX_SANDBOX_INSTANCES var instead.
 			"max_instances": 2900,
             // ATTENTION: Altering instance_type value will have no effect. Please use the SANDBOX_INSTANCE_TYPE var instead.
-            "instance_type": {
-                "vcpu": 4,
-                "memory_mib": 4096,
-                "disk_mb": 10240
-            },
+            "instance_type": "standard",
             "rollout_step_percentage": 100
 		}
 	],
@@ -78,8 +74,7 @@
 			"binding": "DB",
 			"database_name": "s3vcflo-vibesdk-db",
 			"database_id": "bd5d8e72-8861-412a-95bc-5105702438c5",
-			"migrations_dir": "migrations",
-			"remote": true
+			"migrations_dir": "migrations"
 		}
 	],
 	"durable_objects": {
@@ -101,15 +96,13 @@
     "r2_buckets": [
       {
         "binding": "TEMPLATES_BUCKET",
-        "bucket_name": "s3vcflo-vibesdk-templates",
-        "remote": true
+        "bucket_name": "s3vcflo-vibesdk-templates"
       }
     ],
     "kv_namespaces": [
         {
             "binding": "VibecoderStore",
-            "id": "9a8aa9052da049a7b8c7dcc34a7b359b",
-            "remote": true
+            "id": "9a8aa9052da049a7b8c7dcc34a7b359b"
         }
     ],
 	"migrations": [
@@ -129,13 +122,13 @@
 	],
 	"routes": [
         {
-            "pattern": "build.cloudflare.dev",
+            "pattern": "vibesdk.srvcflo.com",
             "custom_domain": true
         },
         {
-            "pattern": "*build-preview.cloudflare.dev/*",
+            "pattern": "*.vibesdk.srvcflo.com/*",
             "custom_domain": false,
-            "zone_id": "db01fac4261b2604aacad8410443a3e2"
+            "zone_id": "4603a67bfb4408bd3032c8df61372cb0"
         }
     ],
 	"vars": {
@@ -143,7 +136,7 @@
         "ALLOWED_EMAIL": "serviceflowagi@gmail.com , mintedmaterial@gmail.com",
         "DISPATCH_NAMESPACE": "s3vcflo-vibesdk-default-namespace",
         "CLOUDFLARE_AI_GATEWAY": "s3vcflo-vibesdk-gateway",
-        "CUSTOM_DOMAIN": "s3vcflo.ai",
+        "CUSTOM_DOMAIN": "srvcflo.com",
         "MAX_SANDBOX_INSTANCES": "10",
         "SANDBOX_INSTANCE_TYPE": "standard"
     },
