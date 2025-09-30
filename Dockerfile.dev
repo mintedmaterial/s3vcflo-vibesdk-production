@@ -1,0 +1,49 @@
+FROM node:22-alpine
+
+# Install necessary build tools
+RUN apk add --no-cache \
+    git \
+    bash \
+    curl \
+    jq \
+    python3 \
+    make \
+    g++ \
+    unzip
+
+# Install Wrangler
+RUN npm install -g wrangler@4.38.0 
+
+# Set working directory
+WORKDIR /app
+
+# Create a script to run the application
+RUN echo '#!/bin/bash\n\
+echo "📦 Installing dependencies..."\n\
+if [ -f "bun.lock" ]; then\n\
+  echo "Using Bun to install dependencies..."\n\
+  bun install\n\
+elif [ -f "package-lock.json" ]; then\n\
+  echo "Using NPM to install dependencies..."\n\
+  npm ci\n\
+else\n\
+  echo "Using NPM to install dependencies..."\n\
+  npm install\n\
+fi\n\
+\n\
+echo "🔨 Building project..."\n\
+if [ -f "bun.lock" ]; then\n\
+  bun run build\n\
+else\n\
+  npm run build\n\
+fi\n\
+\n\
+echo "🚀 Deploying to Cloudflare..."\n\
+wrangler deploy\n\
+' > /usr/local/bin/deploy-app.sh
+
+# Make the script executable
+RUN chmod +x /usr/local/bin/deploy-app.sh
+
+# Set default command
+CMD ["bash"]
