@@ -31,6 +31,10 @@ dist-ssr
 .env
 .env.*
 
+# Backup files with secrets
+custom-config-backup/*.vars.backup
+*.vars.backup
+
 runner/downloads
 /generated/prisma
 
