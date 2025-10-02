@@ -3,18 +3,18 @@ CUSTOM_DOMAIN="srvcflo.com" # Your custom domain for CORS
 ENVIRONMENT="prod" # Options: dev, staging, prod
 
 # Essential Secrets:
-CLOUDFLARE_AI_GATEWAY_TOKEN="qTfGulr9LnXOIxxSTb1lLgSLV2RGaQTbpgFz1Ei3" # If this has read and edit permissions, the AI Gateway will be created automatically. run is required at the least
+CLOUDFLARE_AI_GATEWAY_TOKEN="" # If this has read and edit permissions, the AI Gateway will be created automatically. run is required at the least
 
 # Provider specific secrets:
 ANTHROPIC_API_KEY=""
-OPENAI_API_KEY="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"
-GOOGLE_AI_STUDIO_API_KEY="AIzaSyCKTT-lbrV44VAD_PvcuRIQa6hRDLeRfiQ" # Required - Get from ai.google.dev
-OPENROUTER_API_KEY="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"
-GROQ_API_KEY="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"
+OPENAI_API_KEY=""
+GOOGLE_AI_STUDIO_API_KEY=""
+OPENROUTER_API_KEY=""
+GROQ_API_KEY=""
 
 # Stuff for Oauths:
-GOOGLE_CLIENT_SECRET="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"
-GOOGLE_CLIENT_ID="645431798768-gverbsba88babmc6e8a8ctfp0fk3ievr.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET=""
+GOOGLE_CLIENT_ID=""
 
 # GitHub OAuth
 GITHUB_CLIENT_ID=""
