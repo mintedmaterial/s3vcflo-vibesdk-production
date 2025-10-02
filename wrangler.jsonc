@@ -55,13 +55,6 @@
 	"images": {
 		"binding": "IMAGES"
 	},
-    "dispatch_namespaces": [
-        {
-            "binding": "DISPATCHER",
-            "namespace": "s3vcflo-vibesdk-default-namespace",
-            "remote": true
-        }
-    ],
 	"containers": [
 		{
 			"class_name": "UserAppSandboxService",
@@ -138,7 +131,6 @@
 	"vars": {
         "TEMPLATES_REPOSITORY": "https://github.com/cloudflare/vibesdk-templates",
         "ALLOWED_EMAIL": "serviceflowagi@gmail.com , mintedmaterial@gmail.com",
-        "DISPATCH_NAMESPACE": "s3vcflo-vibesdk-default-namespace",
         "CLOUDFLARE_AI_GATEWAY": "s3vcflo-vibesdk-gateway",
         "CUSTOM_DOMAIN": "vibesdk.srvcflo.com",
         "MAX_SANDBOX_INSTANCES": "10",
