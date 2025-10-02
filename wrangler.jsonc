@@ -55,7 +55,7 @@
     "dispatch_namespaces": [
         {
             "binding": "DISPATCHER",
-            "namespace": "vibesdk-default-namespace",
+            "namespace": "s3vcflo-vibesdk-default-namespace",
             "remote": true
         }
     ],
