@@ -1,0 +1,29 @@
+# Security Configuration
+CUSTOM_DOMAIN="srvcflo.com" # Your custom domain for CORS
+ENVIRONMENT="dev" # Options: dev, staging, prod
+
+# Essential Secrets:
+CLOUDFLARE_AI_GATEWAY_TOKEN="" # If this has read and edit permissions, the AI Gateway will be created automatically. run is required at the least
+
+# Provider specific secrets:
+ANTHROPIC_API_KEY=""
+OPENAI_API_KEY=""
+GOOGLE_AI_STUDIO_API_KEY="" # Required - Get from ai.google.dev
+OPENROUTER_API_KEY=""
+GROQ_API_KEY=""
+
+# Stuff for Oauths:
+GOOGLE_CLIENT_SECRET=""
+GOOGLE_CLIENT_ID=""
+
+# GitHub OAuth
+GITHUB_CLIENT_ID=""
+GITHUB_CLIENT_SECRET=""
+
+# Secrets for various internal services of this platform
+JWT_SECRET="sonic-genie-jwt-secret-dev-1738084567"
+WEBHOOK_SECRET="sonic-genie-webhook-secret-dev-1738084567"
+SECRETS_ENCRYPTION_KEY="sonic-genie-encryption-key-dev-1738084567"
+
+# AI Gateway URL Override (Leave as-is if not going to set it)
+CLOUDFLARE_AI_GATEWAY_URL=""
