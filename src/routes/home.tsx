@@ -7,6 +7,15 @@ import {
 } from '../components/agent-mode-toggle';
 import { useAuthGuard } from '../hooks/useAuthGuard';
 
+// Logo URLs for background animation
+const logoPngs = [
+	"https://dexscreener.com/favicon.png",
+	"https://dd.dexscreener.com/ds-data/dexes/shadow-exchange.png",
+	"https://dd.dexscreener.com/ds-data/dexes/wagmi.png",
+	"https://dd.dexscreener.com/ds-data/dexes/metropolis.png",
+	"https://dd.dexscreener.com/ds-data/dexes/beets.png",
+];
+
 export default function Home() {
 	const navigate = useNavigate();
 	const { requireAuth } = useAuthGuard();
@@ -56,6 +65,82 @@ export default function Home() {
 	useEffect(() => {
 		adjustTextareaHeight();
 	}, []);
+
+	// Background animation
+	useEffect(() => {
+		const canvas = document.getElementById('background-canvas') as HTMLCanvasElement;
+		if (!canvas) return;
+
+		const ctx = canvas.getContext('2d');
+		if (!ctx) return;
+
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+
+		const drops: Array<{
+			x: number;
+			y: number;
+			speed: number;
+			size: number;
+			img: HTMLImageElement;
+		}> = [];
+
+		const images: HTMLImageElement[] = [];
+		let imagesLoaded = 0;
+
+		logoPngs.forEach((src) => {
+			const img = new Image();
+			img.src = src;
+			img.onload = () => {
+				imagesLoaded++;
+				if (imagesLoaded === logoPngs.length) {
+					initDrops();
+				}
+			};
+			images.push(img);
+		});
+
+		function initDrops() {
+			const dropCount = Math.floor((window.innerWidth * window.innerHeight) / 8000);
+			for (let i = 0; i < dropCount; i++) {
+				drops.push({
+					x: Math.random() * window.innerWidth,
+					y: Math.random() * -window.innerHeight,
+					speed: Math.random() * 2 + 1,
+					size: Math.random() * 32 + 16,
+					img: images[Math.floor(Math.random() * images.length)],
+				});
+			}
+			animate();
+		}
+
+		function animate() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+			drops.forEach((drop) => {
+				if (drop.img.complete) {
+					ctx.globalAlpha = 0.15;
+					ctx.drawImage(drop.img, drop.x, drop.y, drop.size, drop.size);
+				}
+				drop.y += drop.speed;
+				if (drop.y > canvas.height) {
+					drop.y = -drop.size;
+					drop.x = Math.random() * canvas.width;
+				}
+			});
+
+			ctx.globalAlpha = 1;
+			requestAnimationFrame(animate);
+		}
+
+		const handleResize = () => {
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+		};
+
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
 	
 	// Typewriter effect
 	useEffect(() => {
@@ -88,34 +173,12 @@ export default function Home() {
 		}
 	}, [currentPlaceholderText, currentPlaceholderPhraseIndex, isPlaceholderTyping, placeholderPhrases]);
 	return (
-		<div className="flex flex-col items-center size-full">
-			<div className="rounded-md mt-46 w-full max-w-2xl overflow-hidden">
-				<div className="absolute inset-2 bottom-0 text-accent z-0 opacity-20">
-					<svg width="100%" height="100%">
-						<defs>
-							<pattern
-								id=":S2:"
-								viewBox="-6 -6 12 12"
-								patternUnits="userSpaceOnUse"
-								width="12"
-								height="12"
-							>
-								<circle
-									cx="0"
-									cy="0"
-									r="1"
-									fill="currentColor"
-								></circle>
-							</pattern>
-						</defs>
-						<rect
-							width="100%"
-							height="100%"
-							fill="url(#:S2:)"
-						></rect>
-					</svg>
-				</div>
-				<div className="px-6 p-8 flex flex-col items-center z-10">
+		<div className="flex flex-col items-center size-full relative">
+			<div className="absolute inset-0 z-0 opacity-10">
+				<canvas id="background-canvas" className="absolute inset-0 w-full h-full pointer-events-none" />
+			</div>
+			<div className="rounded-md mt-46 w-full max-w-2xl overflow-hidden relative z-10">
+				<div className="px-6 p-8 flex flex-col items-center">
 					<h1 className="text-shadow-sm text-shadow-red-200 dark:text-shadow-red-900 text-accent font-medium leading-[1.1] tracking-tight text-6xl w-full mb-4 bg-clip-text bg-gradient-to-r from-text-primary to-text-primary/90">
 						What should we build today?
 					</h1>

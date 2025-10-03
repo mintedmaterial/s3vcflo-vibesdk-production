@@ -34,10 +34,17 @@ export function AIMessage({
 	return (
 		<div className="flex gap-3">
 			<div className="align-text-top pl-1">
-				<AIAvatar className="size-6 text-orange-500" />
+				<video
+					src="/Black White and Green Modern Technology Animated Logo.mp4"
+					autoPlay
+					loop
+					muted
+					playsInline
+					className="size-6 rounded-full object-cover"
+				/>
 			</div>
 			<div className="flex flex-col gap-2 min-w-0">
-				<div className="font-mono font-medium text-text-50">Orange</div>
+				<div className="font-mono font-medium text-text-50">Flo</div>
 				{toolEvents && toolEvents.length > 0 && (
 					<div className="mb-1.5 flex flex-col gap-1">
 						{toolEvents.map((ev) => (

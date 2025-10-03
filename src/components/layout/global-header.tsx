@@ -33,8 +33,10 @@ export function GlobalHeader() {
 							}}
 							className='flex items-center'
 						>
-							<SidebarTrigger className="h-8 w-8 text-text-primary rounded-md hover:bg-orange-50/40 transition-colors duration-200" />
-							<CloudflareLogo
+							<SidebarTrigger className="h-8 w-8 text-text-primary rounded-md hover:bg-green-50/40 transition-colors duration-200" />
+							<img
+								src="/srvcflo-logo.png"
+								alt="SrvcFlo"
 								className="flex-shrink-0 mx-auto transition-all duration-300"
 								style={{
 									width: '28px' ,
@@ -54,15 +56,12 @@ export function GlobalHeader() {
 						transition={{ delay: 0.2 }}
 						className="flex items-center gap-2"
 					>
-						<div className="gap-6 flex flex-col justify-between border px-4 bg-bg-4 dark:bg-bg-2 rounded-md py-2 border-accent/50 dark:border-accent/50 !border-t-transparent rounded-t-none mr-12">
-							<div className="flex w-full gap-2 items-center">
-								<div className='text-text-primary/80 mr-4 text-2xl font-medium'>Deploy your own vibe-coding platform</div>
-								<div className="flex font-semibold gap-2 items-center bg-accent dark:bg-accent text-white rounded px-2 hover:opacity-80 cursor-pointer" onClick={() => window.open("https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/vibesdk", "_blank")}>
-									Deploy <CloudflareLogo className='w-5 h-5' color1='#fff'  />
-								</div>
-								<div className="flex font-semibold items-center bg-text-primary text-bg-4 rounded gap-1 px-2 hover:opacity-80 cursor-pointer" onClick={() => window.open("https://github.com/cloudflare/vibesdk", "_blank")} >
-									Fork <GithubIcon className="size-4" />
-								</div>
+						<div className="flex items-center gap-2">
+							<div className="flex font-semibold gap-2 items-center bg-accent dark:bg-accent text-white rounded px-2 hover:opacity-80 cursor-pointer" onClick={() => window.open("https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/vibesdk", "_blank")}>
+								Deploy <CloudflareLogo className='w-5 h-5' color1='#fff'  />
+							</div>
+							<div className="flex font-semibold items-center bg-text-primary text-bg-4 rounded gap-1 px-2 hover:opacity-80 cursor-pointer" onClick={() => window.open("https://github.com/cloudflare/vibesdk", "_blank")} >
+								Fork <GithubIcon className="size-4" />
 							</div>
 						</div>
                         {/* Disable cost display for now */}
