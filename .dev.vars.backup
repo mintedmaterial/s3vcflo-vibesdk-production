@@ -21,9 +21,9 @@ GITHUB_CLIENT_ID=""
 GITHUB_CLIENT_SECRET=""
 
 # Secrets for various internal services of this platform
-JWT_SECRET="sonic-genie-jwt-secret-dev-1738084567"
-WEBHOOK_SECRET="sonic-genie-webhook-secret-dev-1738084567"
-SECRETS_ENCRYPTION_KEY="sonic-genie-encryption-key-dev-1738084567"
+JWT_SECRET=""
+WEBHOOK_SECRET=""
+SECRETS_ENCRYPTION_KEY=""
 
 # AI Gateway URL Override (Leave as-is if not going to set it)
 CLOUDFLARE_AI_GATEWAY_URL=""
