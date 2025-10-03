@@ -115,10 +115,11 @@ export default function Home() {
 		}
 
 		function animate() {
+			if (!ctx) return;
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 			drops.forEach((drop) => {
-				if (drop.img.complete) {
+				if (drop.img.complete && ctx) {
 					ctx.globalAlpha = 0.15;
 					ctx.drawImage(drop.img, drop.x, drop.y, drop.size, drop.size);
 				}
@@ -129,7 +130,7 @@ export default function Home() {
 				}
 			});
 
-			ctx.globalAlpha = 1;
+			if (ctx) ctx.globalAlpha = 1;
 			requestAnimationFrame(animate);
 		}
 

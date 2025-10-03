@@ -1,4 +1,3 @@
-import { AIAvatar } from '../../../components/icons/logos';
 import clsx from 'clsx';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';

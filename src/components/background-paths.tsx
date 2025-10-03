@@ -72,7 +72,7 @@ function useLogoRain() {
   useEffect(() => {
     let loaded = 0
     const imgs: HTMLImageElement[] = []
-    logoPngs.forEach((src, i) => {
+    logoPngs.forEach((src) => {
       const img = new window.Image()
       img.src = src
       img.onload = () => {
@@ -125,6 +125,7 @@ function useLogoRain() {
     if (!ctx) return
 
     function drawDrops(z: "behind" | "above") {
+      if (!ctx) return
       dropsRef.current.forEach((drop) => {
         if (drop.z !== z) return
         if (drop.img.complete) {
@@ -136,6 +137,7 @@ function useLogoRain() {
     }
 
     function animate() {
+      if (!ctx) return
       ctx.clearRect(0, 0, dimensions.width, dimensions.height)
       drawDrops("behind")
       // Ghosting/foreground is handled by React below
