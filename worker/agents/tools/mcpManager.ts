@@ -155,6 +155,50 @@ export class MCPManager {
 		return Array.from(this.toolMap.keys());
 	}
 
+	async getToolDefinitionsWithImplementations(): Promise<Array<{
+		type: 'function';
+		function: {
+			name: string;
+			description: string;
+			parameters: Record<string, unknown>;
+		};
+		implementation: (args: Record<string, unknown>) => Promise<{ content: string }>;
+	}>> {
+		await this.initialize();
+		const allTools = [];
+
+		for (const [serverName, client] of this.clients.entries()) {
+			try {
+				const toolsResult = await client.listTools();
+
+				if (toolsResult?.tools) {
+					for (const tool of toolsResult.tools) {
+						allTools.push({
+							type: 'function' as const,
+							function: {
+								name: tool.name,
+								description: tool.description || '',
+								parameters: tool.inputSchema || {
+									type: 'object',
+									properties: {},
+									required: [],
+								},
+							},
+							implementation: async (args: Record<string, unknown>) => {
+								const result = await this.executeTool(tool.name, args);
+								return { content: result };
+							},
+						});
+					}
+				}
+			} catch (error) {
+				logger.error(`Error getting tools from ${serverName}:`, error);
+			}
+		}
+
+		return allTools;
+	}
+
 	async shutdown(): Promise<void> {
 		logger.info('Shutting down MCP manager...');
 

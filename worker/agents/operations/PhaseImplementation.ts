@@ -11,6 +11,7 @@ import { SCOFFormat, SCOFParsingState } from '../streaming-formats/scof';
 import { TemplateRegistry } from '../inferutils/schemaFormatters';
 import { IsRealtimeCodeFixerEnabled, RealtimeCodeFixer } from '../assistants/realtimeCodeFixer';
 import { AGENT_CONFIG } from '../inferutils/config';
+import { mcpManager } from '../tools/mcpManager';
 
 export interface PhaseImplementationInputs {
     phase: PhaseConceptType
@@ -170,6 +171,14 @@ These are the instructions and quality standards that must be followed to implem
     •   **Write the whole, raw contents for every file (\`full_content\` format). Do not use diff format.**
     •   **Every phase needs to be deployable with all the views/pages working properly!**
     •   **If its the first phase, make sure you override the template pages in the boilerplate with actual application frontend page!**
+    •   **TEMPLATE CUSTOMIZATION - CRITICAL FOR MULTI-EXAMPLE TEMPLATES:**
+        - If the template contains multiple example files (e.g., \`examples/EndlessRunner.tsx\`, \`examples/Snake.tsx\`, \`examples/PuzzleMatch.tsx\`):
+          1. **ANALYZE** user requirements from blueprint and determine which ONE example matches best
+          2. **DELETE** all other example files that don't match the user's request
+          3. **CUSTOMIZE** the chosen example to match user's specific requirements
+          4. **DO NOT** keep all example files - only implement what the blueprint specifies
+        - Example: If blueprint says "endless runner game", keep only EndlessRunner.tsx and delete Snake.tsx and PuzzleMatch.tsx
+        - Build upon the chosen example's architecture and patterns, not a collection of examples
     •   **Make sure the product after this phase is FUNCTIONAL, POLISHED, AND VISUALLY STUNNING**
         - **Frontend Visual Excellence:** Write frontend code with obsessive attention to visual details:
             - Perfect spacing, alignment, and proportions that create visual harmony
@@ -352,7 +361,10 @@ export class PhaseImplementationOperation extends AgentOperation<PhaseImplementa
         }
 
         const shouldEnableRealtimeCodeFixer = inputs.shouldAutoFix && IsRealtimeCodeFixerEnabled(options.inferenceContext);
-    
+
+        const mcpTools = await mcpManager.getToolDefinitionsWithImplementations();
+        logger.info(`Loaded ${mcpTools.length} MCP tools for phase implementation`);
+
         // Execute inference with streaming
         await executeInference({
             env: env,
@@ -360,6 +372,7 @@ export class PhaseImplementationOperation extends AgentOperation<PhaseImplementa
             context: options.inferenceContext,
             messages,
             modelConfig,
+            tools: mcpTools.length > 0 ? mcpTools : undefined,
             stream: {
                 chunk_size: 256,
                 onChunk: (chunk: string) => {

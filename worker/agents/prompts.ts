@@ -1097,6 +1097,14 @@ const DASHBOARD_INSTRUCTIONS = (): string => `
 const GAME_INSTRUCTIONS = (): string => `
 **GAME DEVELOPMENT SPECIFIC INSTRUCTIONS:**
 
+**CRITICAL - Single Game Implementation:**
+** If the template contains multiple example game files (e.g., EndlessRunner.tsx, Snake.tsx, PuzzleMatch.tsx):
+   - **ANALYZE** user's request and **CHOOSE ONE** example that matches their requirements
+   - **DELETE** all other example game files that don't match the user's request
+   - **CUSTOMIZE** the chosen example to match user's specific game requirements
+   - **DO NOT** keep multiple game examples - implement only what the user requested
+** Build ONE complete, polished game - not a collection of examples
+
 **Core Game Architecture:**
 ** Implement a game loop using requestAnimationFrame for smooth 60fps rendering
 ** Separate game logic (update) from rendering (draw) functions
