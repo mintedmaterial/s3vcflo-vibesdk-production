@@ -5,6 +5,7 @@ import { Blueprint, BlueprintSchema, TemplateSelection } from '../schemas';
 import { createLogger } from '../../logger';
 import { createSystemMessage, createUserMessage } from '../inferutils/common';
 import { InferenceContext } from '../inferutils/config.types';
+import { mcpManager } from '../tools/mcpManager';
 
 const logger = createLogger('Blueprint');
 
@@ -68,6 +69,20 @@ const SYSTEM_PROMPT = `<ROLE>
     • **TEMPLATE ENHANCEMENT:** Build upon the <STARTING TEMPLATE> while significantly elevating its visual appeal. Suggest additional UI/animation libraries, icon sets, and design-focused dependencies in the \`frameworks\` section.
         - Enhance existing project patterns with beautiful visual treatments
         - Add sophisticated styling and interaction libraries as needed
+
+    ## Template Customization & Example Selection:
+    • **CRITICAL: When template includes multiple example files** (e.g., \`examples/EndlessRunner.tsx\`, \`examples/Snake.tsx\`, \`examples/PuzzleMatch.tsx\`):
+        1. **ANALYZE** the user's request to determine which example best matches their needs
+        2. **CHOOSE ONE** example file that aligns with user requirements
+        3. **DELETE** all other example files that are not relevant to the user's request
+        4. **CUSTOMIZE** the chosen example to match user's specific requirements and preferences
+        5. **GENERALIZE** the code - remove example-specific hardcoded values and make it production-ready
+    • **Example Scenario:** If user asks for "endless runner game" and template has EndlessRunner.tsx, Snake.tsx, PuzzleMatch.tsx:
+        - ✅ Keep and customize: \`examples/EndlessRunner.tsx\`
+        - ❌ Delete: \`examples/Snake.tsx\`, \`examples/PuzzleMatch.tsx\`
+        - Modify EndlessRunner to match user's specific game requirements (theme, obstacles, power-ups, etc.)
+    • **DO NOT** keep all example files - this creates confusion and bloat
+    • **DO** build upon the chosen example's architecture and patterns
 
     ## Important use case specific instructions:
     {{usecaseSpecificInstructions}}
@@ -276,6 +291,9 @@ export async function generateBlueprint({ env, inferenceContext, query, language
         //     reasoningEffort = undefined;
         // }
 
+        const mcpTools = await mcpManager.getToolDefinitionsWithImplementations();
+        logger.info(`Loaded ${mcpTools.length} MCP tools for blueprint generation`);
+
         const { object: results } = await executeInference({
             env,
             messages,
@@ -283,6 +301,7 @@ export async function generateBlueprint({ env, inferenceContext, query, language
             schema: BlueprintSchema,
             context: inferenceContext,
             stream: stream,
+            tools: mcpTools.length > 0 ? mcpTools : undefined,
         });
 
         if (results) {

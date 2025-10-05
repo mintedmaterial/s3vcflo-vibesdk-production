@@ -81,6 +81,13 @@ Selection: "vite-solidity-dapp"
 complexity: "complex"
 Reasoning: "Solidity dApp template with OpenZeppelin contracts, wallet integration, and smart contract deployment tools - essential for DeFi staking"
 
+**Example 7 - Classic Arcade Game:**
+User: "Create a simple SNAKE game"
+Templates: ["vite-game-starter", "c-code-react-runner", "vite-cf-DO-runner"]
+Selection: "vite-game-starter"
+complexity: "simple"
+Reasoning: "Game starter template provides HTML5 Canvas, grid-based game logic, collision detection, keyboard input handling, and score tracking - perfect for classic arcade games like Snake, Pac-Man, or Tetris"
+
 ## SELECTION CRITERIA:
 1. **Feature Alignment** - Templates with similar core functionality
 2. **Tech Stack Match** - Compatible frameworks and dependencies  
