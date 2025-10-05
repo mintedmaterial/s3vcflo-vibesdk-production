@@ -88,6 +88,20 @@ Selection: "vite-game-starter"
 complexity: "simple"
 Reasoning: "Game starter template provides HTML5 Canvas, grid-based game logic, collision detection, keyboard input handling, and score tracking - perfect for classic arcade games like Snake, Pac-Man, or Tetris"
 
+**Example 8 - Conversational Smart Contract Request:**
+User: "Can you help me with a Solidity smart contract for an ERC-20 token?"
+Templates: ["vite-solidity-dapp", "c-code-react-runner", "vite-cfagents-runner"]
+Selection: "vite-solidity-dapp"
+complexity: "simple"
+Reasoning: "User needs smart contract generation. Solidity dApp template provides OpenZeppelin MCP tools for ERC-20 generation, contract deployment, and Web3 integration"
+
+**Example 9 - Help Request for NFT Contract:**
+User: "I need help creating an NFT collection smart contract"
+Templates: ["vite-solidity-dapp", "c-code-react-runner", "vite-game-starter"]
+Selection: "vite-solidity-dapp"
+complexity: "simple"
+Reasoning: "NFT contract requires Solidity template with OpenZeppelin MCP server access for ERC-721 contract generation and deployment tools"
+
 ## SELECTION CRITERIA:
 1. **Feature Alignment** - Templates with similar core functionality
 2. **Tech Stack Match** - Compatible frameworks and dependencies  
@@ -103,6 +117,8 @@ Reasoning: "Game starter template provides HTML5 Canvas, grid-based game logic, 
 
 ## RULES:
 - ALWAYS select a template (never return null)
+- Recognize conversational phrasing: "Can you help...", "I need help...", "How do I...", "Show me..."
+- For blockchain/smart contract keywords (Solidity, ERC-20, NFT, token, DeFi, etc.) → select vite-solidity-dapp
 - Ignore misleading template names - analyze actual features
 - Focus on functionality over naming conventions
 - Provide clear, specific reasoning for selection`

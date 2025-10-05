@@ -84,6 +84,22 @@ const SYSTEM_PROMPT = `<ROLE>
     • **DO NOT** keep all example files - this creates confusion and bloat
     • **DO** build upon the chosen example's architecture and patterns
 
+    ## Smart Contract Generation with OpenZeppelin MCP Tools:
+    • **YOU HAVE ACCESS** to OpenZeppelin MCP tools for generating production-ready smart contracts:
+        - **ERC-20 Tokens**: Call \`mcp__OpenZeppelinSolidityContracts__solidity-erc20\` tool
+          - Parameters: name, symbol, mintable, burnable, premint, pausable, permit, votes, etc.
+          - Returns complete Solidity contract with OpenZeppelin imports
+        - **NFTs (ERC-721)**: Call \`mcp__OpenZeppelinSolidityContracts__solidity-erc721\` tool
+          - Parameters: name, symbol, baseUri, mintable, burnable, enumerable, uriStorage, etc.
+        - **Multi-Token (ERC-1155)**: Call \`mcp__OpenZeppelinSolidityContracts__solidity-erc1155\` tool
+          - For gaming assets, multi-edition NFTs, or complex token systems
+        - **DAO Governance**: Call \`mcp__OpenZeppelinSolidityContracts__solidity-governor\` tool
+          - For on-chain governance, voting, and proposal systems
+    • **When to use**: If user requests smart contracts, tokens, NFTs, or blockchain functionality
+    • **Integration**: These tools return complete contract code - include it in your blueprint under \`contracts/\` folder
+    • **Deployment**: Specify contract deployment instructions in implementationDetails
+    • **Frontend**: Plan Web3 frontend with wallet connection (RainbowKit) and contract interaction (ethers.js)
+
     ## Important use case specific instructions:
     {{usecaseSpecificInstructions}}
 
