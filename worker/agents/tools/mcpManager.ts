@@ -10,6 +10,10 @@ const MCP_SERVERS: MCPServerConfig[] = [
 	// 	name: 'cloudflare-docs',
 	// 	sseUrl: 'https://docs.mcp.cloudflare.com/sse',
 	// },
+	{
+		name: 'OpenZeppelinSolidityContracts',
+		sseUrl: 'https://mcp.openzeppelin.com/contracts/solidity/mcp',
+	},
 ];
 
 /**

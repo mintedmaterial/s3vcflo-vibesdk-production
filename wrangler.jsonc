@@ -133,6 +133,7 @@
         "ALLOWED_EMAIL": "serviceflowagi@gmail.com , mintedmaterial@gmail.com , Fantomversus.team@gmail.com , byronstyles978@gmail.com",
         "CLOUDFLARE_AI_GATEWAY": "s3vcflo-vibesdk-gateway",
         "CUSTOM_DOMAIN": "vibesdk.srvcflo.com",
+        "CUSTOM_PREVIEW_DOMAIN": "vibesdk.srvcflo.com",
         "MAX_SANDBOX_INSTANCES": "10",
         "SANDBOX_INSTANCE_TYPE": "standard"
     },

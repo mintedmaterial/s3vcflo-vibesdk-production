@@ -1087,14 +1087,134 @@ const ECOMM_INSTRUCTIONS = (): string => `
 const DASHBOARD_INSTRUCTIONS = (): string => `
 ** If applicable to user query group Related Controls and Forms into Well-Labeled Cards / Panels
 ** If applicable to user query offer Quick Actions / Shortcuts for Common Tasks
-** If user asked for analytics/visualizations/statistics - Show sparklines, mini line/bar charts, or simple pie indicators for trends 
+** If user asked for analytics/visualizations/statistics - Show sparklines, mini line/bar charts, or simple pie indicators for trends
 ** If user asked for analytics/visualizations/statistics - Maybe show key metrics in modular cards
 ** If applicable to user query make It Interactive and Contextual (Filters, Search, Pagination)
 ** If applicable to user query add a sidebar and or tabs
 ** Dashboard should be information dense.
 `;
 
+const GAME_INSTRUCTIONS = (): string => `
+**GAME DEVELOPMENT SPECIFIC INSTRUCTIONS:**
+
+**Core Game Architecture:**
+** Implement a game loop using requestAnimationFrame for smooth 60fps rendering
+** Separate game logic (update) from rendering (draw) functions
+** Use HTML5 Canvas API for all rendering operations
+** Implement proper game state management (menu, playing, paused, game over)
+
+**Game Mechanics:**
+** Define clear win/lose conditions and scoring system
+** Implement input handling for keyboard, mouse, and/or touch
+** Add collision detection for game entities if needed
+** Include proper physics or movement systems (velocity, acceleration)
+** Implement difficulty progression or level systems if applicable
+
+**Visual & Audio:**
+** Create visually appealing game graphics using canvas drawing or sprite sheets
+** Add particle effects for visual polish (explosions, trails, etc.)
+** Include sound effects and background music using Web Audio API
+** Show game UI overlays (score, lives, timer) with proper positioning
+
+**Code Organization:**
+** Create separate classes/modules for: GameEngine, Player, Enemies, Collectibles, UI
+** Use TypeScript interfaces for game entities and configurations
+** Implement proper resource loading (images, sounds) before game starts
+** Add performance optimization (object pooling, frame skipping if needed)
+
+**User Experience:**
+** Include start menu with instructions and settings
+** Add pause functionality (ESC key or button)
+** Show game over screen with score and restart option
+** Include high score tracking using localStorage
+** Make controls responsive and provide visual/audio feedback
+
+**Examples to reference:**
+- Endless Runner: Scrolling background, obstacle generation, jump mechanics
+- Puzzle Game: Grid system, match detection, score calculation
+- Arcade Game: Enemy patterns, power-ups, progressive difficulty
+`;
+
+const WEB3_DAPP_INSTRUCTIONS = (): string => `
+**WEB3 DAPP SPECIFIC INSTRUCTIONS:**
+
+**Wallet Integration:**
+** Implement wallet connection using RainbowKit or similar (MetaMask, WalletConnect, Coinbase Wallet)
+** Show connected wallet address and balance prominently in header
+** Handle wallet connection states (disconnected, connecting, connected, error)
+** Add network switching functionality for different chains (Ethereum, Polygon, BSC, etc.)
+** Display proper error messages for wrong network or rejected transactions
+
+**Smart Contract Integration:**
+** Use ethers.js or viem for blockchain interactions
+** Implement contract read functions (view/pure) for displaying data
+** Implement contract write functions with proper transaction handling
+** Show transaction status (pending, confirmed, failed) with loading states
+** Add transaction history or recent activity section
+** Use OpenZeppelin MCP tools (mcp__OpenZeppelinSolidityContracts__*) for generating smart contracts
+
+**OpenZeppelin Contract Templates:**
+** For ERC20 tokens: Use solidity-erc20 tool with parameters (name, symbol, mintable, burnable, etc.)
+** For NFTs: Use solidity-erc721 tool with parameters (name, symbol, baseUri, enumerable, etc.)
+** For multi-token: Use solidity-erc1155 tool for gaming assets or multi-edition NFTs
+** For governance: Use solidity-governor tool for DAO functionality
+** Always include proper access control (ownable or roles)
+** Add pausable functionality for emergency stops
+
+**DApp UI Components:**
+** Create wallet connect button with current connection status
+** Build transaction modals showing gas estimates and confirmation
+** Add token/NFT display cards with metadata and images
+** Implement forms for contract interactions (mint, transfer, approve)
+** Show real-time blockchain data (balances, ownership, supply)
+** Include network indicator and gas price display
+
+**Web3 Best Practices:**
+** Always validate user inputs before sending transactions
+** Show gas estimates before transaction confirmation
+** Handle edge cases: insufficient balance, high gas, failed transactions
+** Use proper error handling with user-friendly messages
+** Implement proper loading states during blockchain operations
+** Add transaction receipts and block explorer links
+** Cache blockchain data appropriately to reduce RPC calls
+
+**Security Considerations:**
+** Never expose private keys or sensitive data
+** Validate all contract addresses are correct
+** Warn users about transaction risks (gas fees, irreversibility)
+** Use proper type checking for blockchain data (BigNumber, addresses)
+** Implement approval checks before transfers
+
+**DeFi Specific (if applicable):**
+** Show APY/APR calculations for staking/yield farming
+** Display liquidity pool information and ratios
+** Implement token swap interfaces with slippage control
+** Add wallet balance checks before allowing interactions
+** Show pending rewards or claimable tokens
+
+**NFT Specific (if applicable):**
+** Display NFT galleries with images and metadata
+** Implement minting interface with quantity and price
+** Show NFT attributes and rarity information
+** Add filtering and sorting for NFT collections
+** Include IPFS integration for metadata storage
+`;
+
 export const getUsecaseSpecificInstructions = (selectedTemplate: TemplateSelection): string => {
+    // Check template name for specific types
+    const templateName = selectedTemplate.selectedTemplateName?.toLowerCase() || '';
+
+    // Game template
+    if (templateName.includes('game')) {
+        return GAME_INSTRUCTIONS();
+    }
+
+    // Web3/Solidity template
+    if (templateName.includes('solidity') || templateName.includes('web3') || templateName.includes('dapp')) {
+        return WEB3_DAPP_INSTRUCTIONS();
+    }
+
+    // Legacy use-case based selection
     switch (selectedTemplate.useCase) {
         case 'SaaS Product Website':
             return SAAS_LANDING_INSTRUCTIONS(selectedTemplate.styleSelection);

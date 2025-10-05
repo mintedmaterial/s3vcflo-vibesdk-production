@@ -1,14 +1,14 @@
-## Project Report: Orange Build (v2.0 - Modern Architecture)
+## Project Report: Flo Build (v2.0 - Modern Architecture)
 
-**Author:** Ashish Kumar Singh  
-**Updated:** December 2024  
+**Author:** MintedMaterial  
+**Updated:** October 2025  
 **Architecture Version:** v2.0 with Cloudflare Agents SDK & Sandbox Integration
 
 ---
 
 ### I. Executive Summary
 
-**Orange Build** is a sophisticated, open-source AI-powered webapp generation platform that provides a fully self-deployable alternative to proprietary platforms such as **Lovable**, **V0**, and **Bolt**. Built entirely on Cloudflare's developer ecosystem, Orange Build distinguishes itself through its phase-wise, specification-driven development methodology, deterministic code fixing capabilities, and comprehensive quality assurance systems.
+**FLO Build** is a sophisticated, open-source AI-powered webapp generation platform that provides a fully self-deployable alternative to proprietary platforms such as **Lovable**, **V0**, and **Bolt**. Built entirely on Cloudflare's developer ecosystem, Orange Build distinguishes itself through its phase-wise, specification-driven development methodology, deterministic code fixing capabilities, and comprehensive quality assurance systems.
 
 The platform enables users to transform natural language descriptions into fully functional, production-ready web applications through an intelligent multi-agent architecture. Unlike simple "vibe-based" coding agents, Orange Build implements a rigorous, iterative software development lifecycle with real-time error correction, process monitoring, and automated quality assurance that ensures reliable, deployable applications.
 
@@ -23,7 +23,7 @@ The platform enables users to transform natural language descriptions into fully
 
 ### II. Modern System Architecture
 
-Orange Build v2.0 represents a complete architectural modernization, migrating from external runner services to native Cloudflare platform integration:
+Flo Build v2.0 represents a complete architectural modernization, migrating from external runner services to native Cloudflare platform integration:
 
 #### Core Platform Stack:
 - **Frontend**: React + Vite with TypeScript and Tailwind CSS

@@ -1,24 +1,129 @@
-Please build a chatgpt clone for me with a beautiful UI, sidebar, ability to save and retrieve previous conversations, choose between various models etc. It should be able to use tools. Use Cloudflare agents to build it
+# SrvcFlo Sample Prompts
 
-Build a game where I see a map with circles on cities. Each city is a cloudflare datacenter. The map shows with data centres highlighted for 20 seconds, and after that, we show grayed out circles in multiple regions. The user's goal is to remember and click as many regions as they can in 20 seconds and get points based on that
+Explore what SrvcFlo can build for you! From games to DeFi, AI chatbots to real-time collaboration.
 
-Build a drag and drop flow based editor for configuring dynamic routing to ai models. i should be able to add model nodes, conditional nodes, rate limit nodes to build my routing graph
+---
 
-Create a file manager dashboard with a sidebar for navigation, a main area for file display, 
-a toolbar for actions. The sidebar should allow users to navigate between folders in a natural way.
-The main area should show files and folders in a grid or list view. 
-The toolbar should have buttons for creating, deleting, and renaming files and folders.
-I should also be able to open, close, edit the files as well as upload and download files. 
-The design should be clean and modern, with a focus on usability.
+## 🎮 Game Development
 
-Please build a tool/dashboard for me for evaluating various LLM models and comparing their performances side by side - in terms of latency and token generation speed (assume 1 token ~ 4 chars or 0.75 words). I should be able to add custom model names, set custom baseUrl and apiKey per model etc from UI itself.
-I should also be able to evaluate all these models together in parallel on various tasks such as code generation or text generation (I should give a single prompt and have all models work on it in parallel with streaming output, and see how fast they work). The generated code should not be attempted to be executed. Whatever the output for all the models, I should also be able to ask a 'judge' model to evaluate and give rating to each model's output w.r.t each other.
-Thus this should be a complete LLM testing/sandboxing environment
+Build an endless runner game like Flappy Bird with jumping, obstacles, and a scoring system
 
-Make a full banking app
+Create a Match-3 puzzle game similar to Candy Crush with colorful tiles and move counter
 
-create web-based 3D model viewers for rendering and manipulating 3D assets in real time
+Make a classic Snake game with food collection, growth mechanics, and a global leaderboard
 
-Build a full github clone. I should be able to view a repo page, see issues/PRs, navigate to files, also explore new repos, see my open issues/ other use profiles. There should also be a profile page with the timeline for a users changes, and a github like grid with their contributions. Add any other features to make it a complete github clone.
+Build a 2D platformer with gravity, jumping physics, and collision detection
 
-Build a full fledged github clone with all it's functionalities. I should be able to create/edit/commit files, make repos, have organizations, pull requests, issues, proper markdown rendering, code rendering, proper code editor, kanban board, github actions, likes, stars, forks, users, etc.
+Create a puzzle game with grid-based mechanics, scoring, and difficulty progression
+
+Build a memory game where users match pairs of cards with a timer and high score tracking
+
+---
+
+## 🔗 Web3 & Blockchain
+
+Build an NFT marketplace where users can mint, buy, and sell NFTs with MetaMask wallet integration
+
+Create a token staking platform for ERC20 tokens with APY calculations and reward tracking
+
+Build a DAO governance platform with proposal creation, voting, and execution
+
+Make a DeFi yield farming dashboard showing liquidity pools, TVL, and claimable rewards
+
+Create an NFT collection minting page with rarity traits, whitelist support, and OpenSea integration
+
+Build a multi-sig wallet interface for creating and approving transactions
+
+Create a token launch platform with ICO/IDO functionality and vesting schedules
+
+---
+
+## 🤖 AI-Powered Applications
+
+Build an AI coding assistant that can write code, explain concepts, and debug errors
+
+Create a customer support chatbot with knowledge base search and ticket creation
+
+Build a document analysis tool that summarizes PDFs and answers questions about content
+
+Make an AI content generator for blog posts with SEO keyword optimization
+
+Create a code review assistant that analyzes pull requests and suggests improvements
+
+Build an AI-powered email assistant for drafting, replying, and organizing emails
+
+---
+
+## ⚡ Real-time & Collaborative Apps
+
+Build a collaborative whiteboard with real-time drawing, shapes, and user cursors
+
+Create a live chat application with rooms, typing indicators, and message history
+
+Build a real-time multiplayer game lobby with matchmaking and player presence
+
+Make a collaborative code editor with syntax highlighting and live cursors
+
+Create a live analytics dashboard with WebSocket streaming and real-time charts
+
+Build a shared task board like Trello with drag-and-drop and real-time updates
+
+---
+
+## 📊 Dashboards & Admin Tools
+
+Build a comprehensive admin dashboard for managing users, roles, and permissions
+
+Create a project management tool with Kanban boards, Gantt charts, and team collaboration
+
+Build a file manager with upload, download, preview, search, and folder navigation
+
+Make an LLM testing platform to compare AI models side-by-side with streaming responses
+
+Create an analytics dashboard with charts, metrics, filters, and data export
+
+Build a CRM system for managing contacts, deals, and sales pipelines
+
+---
+
+## 🌐 Full-Featured Applications
+
+Build a complete e-commerce platform with products, cart, checkout, and order tracking
+
+Create a social media app with posts, comments, likes, followers, and user profiles
+
+Build a booking system for appointments with calendar view and email notifications
+
+Make a job board with listings, applications, company profiles, and search filters
+
+Create a learning management system with courses, lessons, quizzes, and certificates
+
+Build a restaurant ordering app with menu, cart, delivery tracking, and reviews
+
+---
+
+## 🎨 Creative & Media Apps
+
+Create a photo gallery app with albums, filters, and sharing capabilities
+
+Build a music player with playlists, favorites, and audio visualization
+
+Make a video streaming platform with upload, playback, and recommendations
+
+Create a design tool for creating social media graphics with templates and export
+
+Build a markdown editor with live preview, syntax highlighting, and export options
+
+---
+
+## 💼 Business & Productivity
+
+Build a time tracking app with projects, tasks, reports, and team management
+
+Create an invoice generator with templates, PDF export, and payment tracking
+
+Make an expense tracker with categories, budgets, and financial reports
+
+Build a meeting scheduler with calendar integration and availability detection
+
+Create a knowledge base wiki with markdown editing, search, and version control

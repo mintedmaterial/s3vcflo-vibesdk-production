@@ -1,0 +1,69 @@
+{
+  "templates": [
+    {
+      "name": "c-code-react-runner",
+      "language": "TypeScript",
+      "frameworks": ["React", "Vite", "Tailwind CSS", "Cloudflare Workers"],
+      "description": {
+        "selection": "React + Vite template optimized for client-heavy applications. Includes Tailwind CSS, shadcn/ui components, and Cloudflare Workers backend support. Best for SPAs, dashboards, and static-heavy applications.",
+        "usage": "Perfect for: Single Page Applications (SPAs), Admin dashboards, Data visualization apps, Client-heavy applications with minimal backend logic, Static content sites with interactive elements"
+      }
+    },
+    {
+      "name": "c-code-next-runner",
+      "language": "TypeScript",
+      "frameworks": ["Next.js", "React", "Tailwind CSS", "Framer Motion"],
+      "description": {
+        "selection": "Next.js template with SSR/SSG capabilities, React Server Components, and advanced routing. Includes Framer Motion for animations. Ideal for high-performance, SEO-critical applications with complex server-side requirements.",
+        "usage": "Perfect for: E-commerce platforms, Marketing websites, Blogs with SSR, Content-heavy sites requiring SEO, High-performance server-rendered applications, Multi-page applications with complex routing"
+      }
+    },
+    {
+      "name": "vite-cf-DO-v2-runner",
+      "language": "TypeScript",
+      "frameworks": ["React", "Vite", "Cloudflare Workers", "Durable Objects", "D1 Database"],
+      "description": {
+        "selection": "Advanced backend template with multiple Durable Objects, D1 database integration, and complex state management. Supports multi-entity persistence, real-time sync, and server-side business logic. Best for data-intensive applications.",
+        "usage": "Perfect for: CRM systems, Inventory management, Multi-user collaborative apps, Chat applications with persistence, Real-time multiplayer games, Applications requiring complex backend state and database operations"
+      }
+    },
+    {
+      "name": "vite-cf-DO-runner",
+      "language": "TypeScript",
+      "frameworks": ["React", "Vite", "Cloudflare Workers", "Single Durable Object"],
+      "description": {
+        "selection": "Simplified Durable Object template with single DO instance for stateful services. Ideal for real-time features, counters, live dashboards, and applications requiring server-side state without database complexity.",
+        "usage": "Perfect for: Real-time dashboards, Live counters and analytics, WebSocket-based applications, Stateful services without database, Simple multiplayer features, Session management systems"
+      }
+    },
+    {
+      "name": "vite-cfagents-runner",
+      "language": "TypeScript",
+      "frameworks": ["React", "Vite", "Cloudflare AI Gateway", "Cloudflare Agents SDK", "OpenAI"],
+      "description": {
+        "selection": "AI-first template with Cloudflare Agents SDK, AI Gateway integration, and tool/function calling capabilities. Includes MCP support for extending AI capabilities. Perfect for building intelligent chat applications and AI-powered tools.",
+        "usage": "Perfect for: AI chatbots and assistants, Customer support automation, Code generation tools, Document analysis applications, AI-powered search and recommendation systems, Intelligent data processing tools"
+      }
+    },
+    {
+      "name": "vite-game-starter",
+      "language": "TypeScript",
+      "frameworks": ["React", "Vite", "HTML5 Canvas", "Game Engine Utils"],
+      "description": {
+        "selection": "HTML5 Canvas game template with game loop, input handling, collision detection, and sprite management. Includes example games (endless runner, coin flip, snake). Perfect for 2D browser games and interactive experiences.",
+        "usage": "Perfect for: 2D arcade games, Puzzle games, Endless runners, Card games, Physics-based games, Educational game applications, Interactive animations and visualizations"
+      }
+    },
+    {
+      "name": "vite-solidity-dapp",
+      "language": "TypeScript + Solidity",
+      "frameworks": ["React", "Vite", "ethers.js", "OpenZeppelin", "RainbowKit", "Wagmi"],
+      "description": {
+        "selection": "Web3 dApp template with wallet integration, smart contract deployment tools, and OpenZeppelin contract templates (ERC20, ERC721, NFT). Includes Remix IDE integration and contract interaction utilities. Perfect for blockchain applications.",
+        "usage": "Perfect for: DeFi applications, NFT marketplaces, Token launches (ERC20/ERC721), DAO governance platforms, Staking and yield farming apps, Blockchain games with NFTs, Decentralized exchanges (DEX)"
+      }
+    }
+  ],
+  "version": "2.0.0",
+  "lastUpdated": "2025-10-04T00:00:00.000Z"
+}
