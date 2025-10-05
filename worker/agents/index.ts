@@ -95,11 +95,34 @@ export async function getTemplateForQuery(
         ]);
         
         logger.info('Selected template', { selectedTemplate: analyzeQueryResponse });
-            
+
         // Find the selected template by name in the available templates
         if (!analyzeQueryResponse.selectedTemplateName) {
-            logger.error('No suitable template found for code generation');
-            throw new Error('No suitable template found for code generation');
+            // Smart fallback: Check for blockchain/smart contract keywords
+            const blockchainKeywords = [
+                'solidity', 'smart contract', 'contract', 'erc-20', 'erc20', 'erc-721', 'erc721', 'erc1155',
+                'nft', 'token', 'defi', 'web3', 'blockchain', 'ethereum', 'polygon', 'wallet',
+                'mint', 'dao', 'staking', 'openzeppelin', 'cryptocurrency', 'dapp'
+            ];
+
+            const queryLower = query.toLowerCase();
+            const hasBlockchainKeyword = blockchainKeywords.some(kw => queryLower.includes(kw));
+
+            if (hasBlockchainKeyword) {
+                const detectedKeywords = blockchainKeywords.filter(kw => queryLower.includes(kw));
+                logger.info('No template selected by LLM, but blockchain keywords detected. Auto-selecting vite-solidity-dapp', {
+                    query,
+                    detectedKeywords
+                });
+
+                analyzeQueryResponse.selectedTemplateName = 'vite-solidity-dapp';
+                analyzeQueryResponse.reasoning = 'Auto-selected Solidity dApp template based on blockchain/smart contract keywords in query. OpenZeppelin MCP tools available for contract generation.';
+                analyzeQueryResponse.complexity = 'simple';
+                analyzeQueryResponse.projectName = 'smart-contract-project';
+            } else {
+                logger.error('No suitable template found for code generation');
+                throw new Error('No suitable template found for code generation');
+            }
         }
             
         const selectedTemplate = templatesResponse.templates.find(template => template.name === analyzeQueryResponse.selectedTemplateName);
