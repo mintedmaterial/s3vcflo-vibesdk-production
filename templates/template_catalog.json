@@ -1,7 +1,6 @@
-{
-  "templates": [
-    {
-      "name": "c-code-react-runner",
+[
+  {
+    "name": "c-code-react-runner",
       "language": "TypeScript",
       "frameworks": ["React", "Vite", "Tailwind CSS", "Cloudflare Workers"],
       "description": {
@@ -63,7 +62,4 @@
         "usage": "Perfect for: DeFi applications, NFT marketplaces, Token launches (ERC20/ERC721), DAO governance platforms, Staking and yield farming apps, Blockchain games with NFTs, Decentralized exchanges (DEX)"
       }
     }
-  ],
-  "version": "2.0.0",
-  "lastUpdated": "2025-10-04T00:00:00.000Z"
-}
+]
