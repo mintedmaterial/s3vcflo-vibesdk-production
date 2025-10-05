@@ -41,24 +41,45 @@ export async function selectTemplate({ env, query, availableTemplates, inference
 
 **Example 1 - Game Request:**
 User: "Build a 2D puzzle game with scoring"
-Templates: ["react-dashboard", "react-game-starter", "vue-blog"]
-Selection: "react-game-starter"
+Templates: ["c-code-react-runner", "vite-game-starter", "vite-cf-DO-runner"]
+Selection: "vite-game-starter"
 complexity: "simple"
-Reasoning: "Game starter template provides canvas setup, state management, and scoring systems"
+Reasoning: "Game starter template provides HTML5 Canvas, game loop, input handling, collision detection, and scoring systems perfect for 2D puzzle games"
 
-**Example 2 - Business Dashboard:**
+**Example 2 - Web3/Blockchain Request:**
+User: "Create an NFT marketplace where users can mint and trade NFTs"
+Templates: ["c-code-react-runner", "vite-solidity-dapp", "vite-cfagents-runner"]
+Selection: "vite-solidity-dapp"
+complexity: "moderate"
+Reasoning: "Solidity dApp template includes wallet integration (RainbowKit), OpenZeppelin ERC721 contracts, ethers.js for blockchain interaction, perfect for NFT marketplace"
+
+**Example 3 - AI Chat Application:**
+User: "Build an AI chatbot with tool calling capabilities"
+Templates: ["c-code-react-runner", "vite-cfagents-runner", "vite-cf-DO-runner"]
+Selection: "vite-cfagents-runner"
+complexity: "simple"
+Reasoning: "CF Agents SDK template provides AI Gateway integration, MCP support for tools, and function calling - exactly what's needed for intelligent chatbots"
+
+**Example 4 - Business Dashboard:**
 User: "Create an analytics dashboard with charts"
-Templates: ["react-dashboard", "nextjs-blog", "vanilla-js"]
-Selection: "react-dashboard"
-complexity: "simple" // Because single page application
-Reasoning: "Dashboard template includes chart components, grid layouts, and data visualization setup"
+Templates: ["c-code-react-runner", "c-code-next-runner", "vite-cf-DO-runner"]
+Selection: "c-code-react-runner"
+complexity: "simple"
+Reasoning: "React + Vite template is perfect for SPAs and dashboards with client-side data visualization"
 
-**Example 3 - No Perfect Match:**
-User: "Build a recipe sharing app"
-Templates: ["react-social", "vue-blog", "angular-todo"]
-Selection: "react-social"
-complexity: "simple" // Because single page application
-Reasoning: "Social template provides user interactions, content sharing, and community features closest to recipe sharing needs"
+**Example 5 - Real-time Multiplayer:**
+User: "Build a real-time collaborative whiteboard"
+Templates: ["c-code-react-runner", "vite-cf-DO-v2-runner", "vite-cf-DO-runner"]
+Selection: "vite-cf-DO-runner"
+complexity: "moderate"
+Reasoning: "Single Durable Object template provides WebSocket support and stateful real-time features needed for collaboration"
+
+**Example 6 - DeFi Application:**
+User: "Create a staking platform for ERC20 tokens"
+Templates: ["vite-solidity-dapp", "vite-cf-DO-v2-runner", "c-code-react-runner"]
+Selection: "vite-solidity-dapp"
+complexity: "complex"
+Reasoning: "Solidity dApp template with OpenZeppelin contracts, wallet integration, and smart contract deployment tools - essential for DeFi staking"
 
 ## SELECTION CRITERIA:
 1. **Feature Alignment** - Templates with similar core functionality
