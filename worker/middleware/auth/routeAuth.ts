@@ -223,6 +223,14 @@ function createForbiddenResponse(message: string): Response {
  */
 export async function checkAppOwnership(user: AuthUser, params: Record<string, string>, env: Env): Promise<boolean> {
     try {
+        // Check if user is in ALLOWED_EMAIL list (admins have access to all resources)
+        if (env.ALLOWED_EMAIL && user.email) {
+            const allowedEmails = env.ALLOWED_EMAIL.split(',').map(email => email.trim().toLowerCase());
+            if (allowedEmails.includes(user.email.toLowerCase())) {
+                return true;
+            }
+        }
+
         const agentId = params.agentId || params.id;
         if (!agentId) {
             return false;
