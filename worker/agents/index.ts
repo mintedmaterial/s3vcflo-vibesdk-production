@@ -95,10 +95,10 @@ export async function getTemplateForQuery(
         ]);
         
         logger.info('Selected template', { selectedTemplate: analyzeQueryResponse });
-            
+
         // Find the selected template by name in the available templates
-        if (!analyzeQueryResponse.selectedTemplateName) {
-            logger.error('No suitable template found for code generation');
+        if (!analyzeQueryResponse || !analyzeQueryResponse.selectedTemplateName) {
+            logger.error('No suitable template found for code generation', { analyzeQueryResponse });
             throw new Error('No suitable template found for code generation');
         }
             
