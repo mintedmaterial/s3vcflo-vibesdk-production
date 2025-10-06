@@ -822,7 +822,7 @@ export class SandboxSdkClient extends BaseSandboxService {
                         
                     // Expose port on workers.dev subdomain for container instance
                     const containerDomain = getContainerPreviewDomain(env);
-                    const previewResult = await sandbox.exposePort(allocatedPort, {
+                    await sandbox.exposePort(allocatedPort, {
                         hostname: containerDomain
                     });
 
