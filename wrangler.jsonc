@@ -134,6 +134,7 @@
         "CLOUDFLARE_AI_GATEWAY": "s3vcflo-vibesdk-gateway",
         "CUSTOM_DOMAIN": "vibesdk.srvcflo.com",
         "CUSTOM_PREVIEW_DOMAIN": "vibesdk.srvcflo.com",
+        "CONTAINER_PREVIEW_SUBDOMAIN": "srvcflo.workers.dev",
         "MAX_SANDBOX_INSTANCES": "10",
         "SANDBOX_INSTANCE_TYPE": "standard",
         "SANDBOX_SERVICE_TYPE": "sandbox"

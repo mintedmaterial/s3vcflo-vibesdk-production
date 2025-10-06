@@ -46,7 +46,7 @@ import { ResourceProvisioner } from './resourceProvisioner';
 import { TemplateParser } from './templateParser';
 import { ResourceProvisioningResult } from './types';
 import { GitHubService } from '../github/GitHubService';
-import { getPreviewDomain } from 'worker/utils/urls';
+import { getPreviewDomain, buildContainerPreviewUrl, getContainerPreviewDomain } from 'worker/utils/urls';
 // Export the Sandbox class in your Worker
 export { Sandbox as UserAppSandboxService, Sandbox as DeployerService} from "@cloudflare/sandbox";
 
@@ -820,16 +820,22 @@ export class SandboxSdkClient extends BaseSandboxService {
                     const processId = await this.startDevServer(instanceId, allocatedPort);
                     this.logger.info('Instance created successfully', { instanceId, processId, port: allocatedPort });
                         
-                    // Expose the same port for preview URL
-                    const previewResult = await sandbox.exposePort(allocatedPort, { hostname: getPreviewDomain(env) });
-                    let previewURL = previewResult.url;
-                    const previewDomain = getPreviewDomain(env);
-                    if (previewDomain) {
-                        // Replace CUSTOM_DOMAIN with previewDomain in previewURL
-                        previewURL = previewURL.replace(env.CUSTOM_DOMAIN, previewDomain);
-                    }
-                        
-                    this.logger.info('Preview URL exposed', { instanceId, previewURL });
+                    // Expose port on workers.dev subdomain for container instance
+                    const containerDomain = getContainerPreviewDomain(env);
+                    const previewResult = await sandbox.exposePort(allocatedPort, {
+                        hostname: containerDomain
+                    });
+
+                    // Build proper container preview URL
+                    // Format: https://{projectName}-{instanceId}.srvcflo.workers.dev
+                    const previewURL = buildContainerPreviewUrl(env, projectName, instanceId);
+
+                    this.logger.info('Container preview URL generated', {
+                        instanceId,
+                        projectName,
+                        containerDomain,
+                        previewURL
+                    });
 
                     // In the background, run an iteration of static analysis to build up cache
                     Promise.allSettled([
