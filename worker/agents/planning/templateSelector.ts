@@ -155,11 +155,17 @@ Analyze each template's features, frameworks, and architecture to make the best 
         return selection;
 
     } catch (error) {
-        logger.error("Error during AI template selection:", error);
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        const errorStack = error instanceof Error ? error.stack : undefined;
+        logger.error("Error during AI template selection:", {
+            error: errorMessage,
+            stack: errorStack,
+            errorType: error?.constructor?.name
+        });
         if (error instanceof RateLimitExceededError || error instanceof SecurityError) {
             throw error;
         }
         // Fallback to no template selection in case of error
-        return { selectedTemplateName: null, reasoning: "An error occurred during the template selection process.", useCase: null, complexity: null, styleSelection: null, projectName: '' };
+        return { selectedTemplateName: null, reasoning: `An error occurred during the template selection process: ${errorMessage}`, useCase: null, complexity: null, styleSelection: null, projectName: '' };
     }
 }
