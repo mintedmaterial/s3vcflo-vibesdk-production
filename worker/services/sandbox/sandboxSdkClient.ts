@@ -343,7 +343,7 @@ export class SandboxSdkClient extends BaseSandboxService {
 
     private async getTemplateFromCatalog(templateName: string): Promise<TemplateInfo | null> {
         try {
-            const templatesResponse = await SandboxSdkClient.listTemplates(env);
+            const templatesResponse = await SandboxSdkClient.listTemplates();
             if (templatesResponse.success) {
                 return templatesResponse.templates.find(t => t.name === templateName) || null;
             }
