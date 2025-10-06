@@ -17,22 +17,3 @@ export function buildUserWorkerUrl(env: Env, deploymentId: string): string {
     const protocol = getProtocolForHost(domain);
     return `${protocol}://${deploymentId}.${domain}`;
 }
-
-/**
- * Get the workers.dev subdomain for container instance preview URLs
- */
-export function getContainerPreviewDomain(env: Env): string {
-    if (env.CONTAINER_PREVIEW_SUBDOMAIN) {
-        return env.CONTAINER_PREVIEW_SUBDOMAIN;
-    }
-    return 'srvcflo.workers.dev';
-}
-
-/**
- * Build container instance preview URL
- * Format: https://{projectName}-{instanceId}.srvcflo.workers.dev
- */
-export function buildContainerPreviewUrl(env: Env, projectName: string, instanceId: string): string {
-    const domain = getContainerPreviewDomain(env);
-    return `https://${projectName}-${instanceId}.${domain}/`;
-}

@@ -46,7 +46,7 @@ import { ResourceProvisioner } from './resourceProvisioner';
 import { TemplateParser } from './templateParser';
 import { ResourceProvisioningResult } from './types';
 import { GitHubService } from '../github/GitHubService';
-import { getPreviewDomain, buildContainerPreviewUrl, getContainerPreviewDomain } from 'worker/utils/urls';
+import { getPreviewDomain } from 'worker/utils/urls';
 // Export the Sandbox class in your Worker
 export { Sandbox as UserAppSandboxService, Sandbox as DeployerService} from "@cloudflare/sandbox";
 
@@ -820,20 +820,24 @@ export class SandboxSdkClient extends BaseSandboxService {
                     const processId = await this.startDevServer(instanceId, allocatedPort);
                     this.logger.info('Instance created successfully', { instanceId, processId, port: allocatedPort });
                         
-                    // Expose port on workers.dev subdomain for container instance
-                    const containerDomain = getContainerPreviewDomain(env);
-                    await sandbox.exposePort(allocatedPort, {
-                        hostname: containerDomain
+                    // Expose port and get preview URL (matches official vibesdk approach)
+                    const previewResult = await sandbox.exposePort(allocatedPort, {
+                        hostname: getPreviewDomain(env)
                     });
 
-                    // Build proper container preview URL
-                    // Format: https://{projectName}-{instanceId}.srvcflo.workers.dev
-                    const previewURL = buildContainerPreviewUrl(env, projectName, instanceId);
+                    // Use the URL returned by exposePort - it's already correctly formatted
+                    let previewURL = previewResult.url;
+
+                    // For non-dev environments, replace domain if needed
+                    const previewDomain = getPreviewDomain(env);
+                    if (previewDomain && previewDomain !== env.CUSTOM_DOMAIN) {
+                        previewURL = previewURL.replace(env.CUSTOM_DOMAIN, previewDomain);
+                    }
 
                     this.logger.info('Container preview URL generated', {
                         instanceId,
                         projectName,
-                        containerDomain,
+                        previewDomain,
                         previewURL
                     });
 
@@ -908,8 +912,25 @@ export class SandboxSdkClient extends BaseSandboxService {
                 throw new Error(`Failed to move template: ${moveTemplateResult.stderr}`);
             }
             
-            const setupPromise = () => this.setupInstance(instanceId, projectName, localEnvVars);
-            const setupResult = await setupPromise();
+            // Add timeout protection like official vibesdk
+            let timeoutId: ReturnType<typeof setTimeout>;
+            const timeoutPromise = new Promise<never>((_, reject) => {
+                timeoutId = setTimeout(() => {
+                    this.logger.warn('Instance creation timed out after 60 seconds', {
+                        instanceId,
+                        templateName,
+                        projectName
+                    });
+                    reject(new Error('Instance creation timed out'));
+                }, 60000);
+            });
+
+            // Race between setup and timeout
+            const setupPromise = this.setupInstance(instanceId, projectName, localEnvVars);
+            const setupResult = await Promise.race([setupPromise, timeoutPromise]);
+
+            clearTimeout(timeoutId!);
+
             if (!setupResult) {
                 return {
                     success: false,
