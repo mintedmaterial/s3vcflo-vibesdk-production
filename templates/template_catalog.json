@@ -61,5 +61,14 @@
         "selection": "Web3 dApp template with wallet integration, smart contract deployment tools, and OpenZeppelin contract templates (ERC20, ERC721, NFT). Includes Remix IDE integration and contract interaction utilities. Perfect for blockchain applications.",
         "usage": "Perfect for: DeFi applications, NFT marketplaces, Token launches (ERC20/ERC721), DAO governance platforms, Staking and yield farming apps, Blockchain games with NFTs, Decentralized exchanges (DEX)"
       }
+    },
+    {
+      "name": "mcp-worker-template",
+      "language": "TypeScript",
+      "frameworks": ["Cloudflare Workers", "Hono", "Model Context Protocol (MCP)", "Bun", "OpenTelemetry"],
+      "description": {
+        "selection": "Production-grade MCP (Model Context Protocol) server template for building AI tool servers on Cloudflare Workers. Features declarative tool definitions, DI architecture, JWT/OAuth auth, pluggable storage (KV/R2), and full observability. Perfect for extending AI assistants with custom tools and capabilities.",
+        "usage": "Perfect for: AI assistant tool servers, LLM function calling backends, Claude/ChatGPT custom tools, Model Context Protocol servers, Edge-deployed AI integrations, Serverless AI tool hosting, Custom AI capability extensions, Multi-model tool orchestration"
+      }
     }
 ]
