@@ -29,6 +29,92 @@
   .chat-edge-throb { animation: none; }
 }
 
+/* Glow animations for dark mode */
+@keyframes glow-shift {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.3)) drop-shadow(0 0 16px rgba(59, 130, 246, 0.15));
+  }
+  25% {
+    filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.3)) drop-shadow(0 0 16px rgba(168, 85, 247, 0.15));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.3)) drop-shadow(0 0 16px rgba(6, 182, 212, 0.15));
+  }
+  75% {
+    filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.3)) drop-shadow(0 0 16px rgba(236, 72, 153, 0.15));
+  }
+}
+
+@keyframes border-glow-shift {
+  0%,
+  100% {
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.2), 0 0 24px rgba(59, 130, 246, 0.1), inset 0 0 12px
+      rgba(59, 130, 246, 0.05);
+  }
+  25% {
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.2), 0 0 24px rgba(168, 85, 247, 0.1), inset 0 0 12px
+      rgba(168, 85, 247, 0.05);
+  }
+  50% {
+    box-shadow: 0 0 12px rgba(6, 182, 212, 0.2), 0 0 24px rgba(6, 182, 212, 0.1), inset 0 0 12px rgba(6, 182, 212, 0.05);
+  }
+  75% {
+    box-shadow: 0 0 12px rgba(236, 72, 153, 0.2), 0 0 24px rgba(236, 72, 153, 0.1), inset 0 0 12px
+      rgba(236, 72, 153, 0.05);
+  }
+}
+
+@keyframes button-glow-shift {
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.4), 0 0 16px rgba(59, 130, 246, 0.2);
+  }
+  25% {
+    box-shadow: 0 0 8px rgba(168, 85, 247, 0.4), 0 0 16px rgba(168, 85, 247, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 8px rgba(6, 182, 212, 0.4), 0 0 16px rgba(6, 182, 212, 0.2);
+  }
+  75% {
+    box-shadow: 0 0 8px rgba(236, 72, 153, 0.4), 0 0 16px rgba(236, 72, 153, 0.2);
+  }
+}
+
+.text-glow {
+  /* Light mode: black text with subtle blue glow */
+  color: #0a0a0a;
+  text-shadow: 0 0 20px rgba(59, 130, 246, 0.3), 0 0 40px rgba(59, 130, 246, 0.15);
+}
+
+.dark .text-glow {
+  /* Dark mode: white text with animated color-changing glow */
+  color: #ffffff;
+  animation: glow-shift 8s ease-in-out infinite;
+}
+
+.line-glow {
+  /* Light mode: subtle blue glow on border */
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.15), 0 0 24px rgba(59, 130, 246, 0.08);
+}
+
+.dark .line-glow {
+  /* Dark mode: animated color-changing border glow */
+  border: 1px solid rgba(57, 57, 57, 0.5);
+  animation: border-glow-shift 8s ease-in-out infinite;
+}
+
+.button-glow {
+  /* Light mode: subtle glow */
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.2), 0 0 16px rgba(59, 130, 246, 0.1);
+}
+
+.dark .button-glow {
+  /* Dark mode: animated color-changing glow */
+  animation: button-glow-shift 8s ease-in-out infinite;
+}
+
 @custom-variant dark (&:is(.dark *));
 @plugin '@tailwindcss/typography';
 @theme inline {

@@ -237,7 +237,7 @@ export default function Home() {
 			</div>
 			<div className="rounded-md mt-46 w-full max-w-2xl overflow-hidden relative z-10">
 				<div className="px-6 p-8 flex flex-col items-center">
-					<h1 className="text-shadow-sm text-shadow-red-200 dark:text-shadow-red-900 text-accent font-medium leading-[1.1] tracking-tight text-6xl w-full mb-4 bg-clip-text bg-gradient-to-r from-text-primary to-text-primary/90">
+					<h1 className="text-glow font-medium leading-tight tracking-tight text-5xl w-full mb-8">
 						What should we build today?
 					</h1>
 
@@ -248,10 +248,10 @@ export default function Home() {
 							const query = textareaRef.current!.value;
 							handleCreateApp(query, agentMode);
 						}}
-						className="flex z-10 flex-col w-full min-h-[150px] bg-bg-4 border border-accent/30 dark:border-accent/50 justify-between dark:bg-bg-2 rounded-[18px] shadow-textarea p-5 transition-all duration-200"
+						className="flex z-10 flex-col w-full min-h-[150px] bg-bg-4 dark:bg-bg-2 justify-between line-glow rounded-[18px] p-5 transition-all duration-200"
 					>
 						<textarea
-							className="w-full resize-none ring-0 z-20 outline-0 placeholder:text-text-primary/60 text-text-primary"
+							className="w-full resize-none ring-0 z-20 outline-0 border-0 bg-transparent placeholder:text-text-primary/60 text-text-primary"
 							name="query"
 							placeholder={`Create a ${currentPlaceholderText}`}
 							ref={textareaRef}
@@ -292,7 +292,7 @@ export default function Home() {
 								/>
 								<button
 									type="submit"
-									className="bg-accent text-white p-1 rounded-md *:size-5 transition-all duration-200 hover:shadow-md"
+									className="bg-accent text-white p-1 rounded-md *:size-5 transition-all duration-200 button-glow"
 								>
 									<ArrowRight />
 								</button>
