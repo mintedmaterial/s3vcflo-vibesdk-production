@@ -257,3 +257,16 @@ export type {
     GitHubExportOptions,
     GitHubExportResult,
 } from 'worker/services/github/types';
+
+// Image Attachment Types
+export type {
+    ImageAttachment,
+    SupportedImageMimeType
+} from 'worker/types/image-attachment';
+export {
+    SUPPORTED_IMAGE_MIME_TYPES,
+    isSupportedImageType,
+    MAX_IMAGE_SIZE_BYTES,
+    MAX_IMAGES_PER_MESSAGE,
+    getFileExtensionFromMimeType
+} from 'worker/types/image-attachment';

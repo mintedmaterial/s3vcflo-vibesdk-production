@@ -7,7 +7,7 @@ import {
 	type FormEvent,
 } from 'react';
 import { ArrowRight } from 'react-feather';
-import { useParams, useSearchParams, useNavigate } from 'react-router';
+import { useParams, useSearchParams, useNavigate, useLocation } from 'react-router';
 import { MonacoEditor } from '../../components/monaco-editor/monaco-editor';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Expand, Github, LoaderCircle, RefreshCw } from 'lucide-react';
@@ -34,10 +34,14 @@ import { useAutoScroll } from '@/hooks/use-auto-scroll';
 
 export default function Chat() {
 	const { chatId: urlChatId } = useParams();
+	const location = useLocation();
 
 	const [searchParams] = useSearchParams();
 	const userQuery = searchParams.get('query');
 	const agentMode = searchParams.get('agentMode') || 'deterministic';
+
+	// Get images from navigation state (passed from home page)
+	const userImages = location.state?.images;
 
 	// Load existing app data if chatId is provided
 	const { app, loading: appLoading } = useApp(urlChatId);
@@ -117,6 +121,7 @@ export default function Chat() {
 		chatId: urlChatId,
 		query: userQuery,
 		agentMode: agentMode as 'deterministic' | 'smart',
+		images: userImages,
 		onDebugMessage: addDebugMessage,
 	});
 

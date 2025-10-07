@@ -4,7 +4,8 @@ import {
     RateLimitExceededError,
 	type BlueprintType,
 	type WebSocketMessage,
-	type CodeFixEdits} from '@/api-types';
+	type CodeFixEdits,
+	type ImageAttachment} from '@/api-types';
 import {
 	createRepairingJSONParser,
 	ndjsonStream,
@@ -48,12 +49,14 @@ export function useChat({
 	chatId: urlChatId,
 	query: userQuery,
 	agentMode = 'deterministic',
+	images: userImages,
 	onDebugMessage,
 	onTerminalMessage,
 }: {
 	chatId?: string;
 	query: string | null;
 	agentMode?: 'deterministic' | 'smart';
+	images?: ImageAttachment[];
 	onDebugMessage?: (type: 'error' | 'warning' | 'info' | 'websocket', message: string, details?: string, source?: string, messageType?: string, rawMessage?: unknown) => void;
 	onTerminalMessage?: (log: { id: string; content: string; type: 'command' | 'stdout' | 'stderr' | 'info' | 'error' | 'warn' | 'debug'; timestamp: number; source?: string }) => void;
 }) {
@@ -394,6 +397,7 @@ export function useChat({
 					const response = await apiClient.createAgentSession({
 						query: userQuery,
 						agentMode,
+						images: userImages, // Pass images from URL params for multi-modal blueprint
 					});
 
 					const parser = createRepairingJSONParser();

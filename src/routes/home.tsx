@@ -1,11 +1,15 @@
-import { useRef, useState, useEffect, useMemo } from 'react';
+import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
 import { ArrowRight } from 'react-feather';
 import { useNavigate } from 'react-router';
 import {
 	AgentModeToggle,
 	type AgentMode,
 } from '../components/agent-mode-toggle';
+import { ImageUploadButton } from '../components/image-upload-button';
+import { ImageAttachmentPreview } from '../components/image-attachment-preview';
 import { useAuthGuard } from '../hooks/useAuthGuard';
+import type { ImageAttachment } from '@/api-types';
+import { isSupportedImageType, MAX_IMAGE_SIZE_BYTES, MAX_IMAGES_PER_MESSAGE } from '@/api-types';
 
 // Logo URLs for background animation
 const logoPngs = [
@@ -21,8 +25,9 @@ export default function Home() {
 	const { requireAuth } = useAuthGuard();
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const [agentMode, setAgentMode] = useState<AgentMode>('deterministic');
-	
-	
+	const [images, setImages] = useState<ImageAttachment[]>([]);
+	const [isProcessing, setIsProcessing] = useState(false);
+
 	const placeholderPhrases = useMemo(() => [
 		"todo list app",
 		"F1 fantasy game",
@@ -31,6 +36,58 @@ export default function Home() {
 	const [currentPlaceholderPhraseIndex, setCurrentPlaceholderPhraseIndex] = useState(0);
 	const [currentPlaceholderText, setCurrentPlaceholderText] = useState("");
 	const [isPlaceholderTyping, setIsPlaceholderTyping] = useState(true);
+
+	const addImages = useCallback(async (files: File[]) => {
+		setIsProcessing(true);
+		const newImages: ImageAttachment[] = [];
+
+		for (const file of files) {
+			if (!isSupportedImageType(file.type)) {
+				console.warn(`Unsupported image type: ${file.type}`);
+				continue;
+			}
+
+			if (file.size > MAX_IMAGE_SIZE_BYTES) {
+				console.warn(`Image too large: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
+				continue;
+			}
+
+			if (images.length + newImages.length >= MAX_IMAGES_PER_MESSAGE) {
+				console.warn(`Maximum ${MAX_IMAGES_PER_MESSAGE} images allowed`);
+				break;
+			}
+
+			try {
+				const base64Data = await new Promise<string>((resolve, reject) => {
+					const reader = new FileReader();
+					reader.onload = () => {
+						const result = reader.result as string;
+						const base64 = result.split(',')[1];
+						resolve(base64);
+					};
+					reader.onerror = reject;
+					reader.readAsDataURL(file);
+				});
+
+				newImages.push({
+					id: `img-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+					filename: file.name,
+					mimeType: file.type as 'image/png' | 'image/jpeg' | 'image/webp',
+					base64Data,
+					size: file.size,
+				});
+			} catch (error) {
+				console.error(`Failed to process image: ${file.name}`, error);
+			}
+		}
+
+		setImages((prev) => [...prev, ...newImages]);
+		setIsProcessing(false);
+	}, [images.length]);
+
+	const removeImage = useCallback((id: string) => {
+		setImages((prev) => prev.filter((img) => img.id !== id));
+	}, []);
 
 	const handleCreateApp = (query: string, mode: AgentMode) => {
 		const encodedQuery = encodeURIComponent(query);
@@ -47,8 +104,8 @@ export default function Home() {
 			return;
 		}
 
-		// User is already authenticated, navigate immediately
-		navigate(intendedUrl);
+		// User is already authenticated, navigate immediately with images
+		navigate(intendedUrl, { state: { images } });
 	};
 
 	// Auto-resize textarea based on content
@@ -208,6 +265,15 @@ export default function Home() {
 								}
 							}}
 						/>
+						{images.length > 0 && (
+							<div className="mt-3">
+								<ImageAttachmentPreview
+									images={images}
+									onRemove={removeImage}
+									className="mb-2"
+								/>
+							</div>
+						)}
 						<div className="flex items-center justify-between mt-4 pt-1">
 							{import.meta.env.VITE_AGENT_MODE_ENABLED ? (
 								<AgentModeToggle
@@ -219,7 +285,11 @@ export default function Home() {
 								<div></div>
 							)}
 
-							<div className="flex items-center justify-end ml-4">
+							<div className="flex items-center justify-end ml-4 gap-2">
+								<ImageUploadButton
+									onFilesSelected={addImages}
+									disabled={isProcessing}
+								/>
 								<button
 									type="submit"
 									className="bg-accent text-white p-1 rounded-md *:size-5 transition-all duration-200 hover:shadow-md"
