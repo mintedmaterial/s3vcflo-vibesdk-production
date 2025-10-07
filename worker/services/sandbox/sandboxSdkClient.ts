@@ -1063,12 +1063,14 @@ export class SandboxSdkClient extends BaseSandboxService {
                     try {
                         const process = await this.getSandbox().getProcess(metadata.processId);
                         isHealthy = !!(process && process.status === 'running');
-                    } catch {
+                    } catch (error) {
+                        this.logger.error(`Process ${metadata.processId} not found or not running`, error);
                         isHealthy = false; // Process not found or not running
                     }
                 }
-            } catch {
+            } catch (error) {
                 // No preview available
+                this.logger.error('Failed to check instance health', error);
                 isHealthy = false;
             }
 
