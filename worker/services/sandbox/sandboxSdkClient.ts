@@ -780,14 +780,20 @@ export class SandboxSdkClient extends BaseSandboxService {
     private async setupInstance(instanceId: string, projectName: string, _localEnvVars?: Record<string, string>): Promise<{previewURL: string, tunnelURL: string, processId: string, allocatedPort: number} | undefined> {
         try {
             const sandbox = this.getSandbox();
+            this.logger.info('Starting instance setup', { instanceId, projectName });
+
             // Update project configuration with the specified project name
+            this.logger.info('Updating project configuration', { instanceId });
             await this.updateProjectConfiguration(instanceId, projectName);
-            
+            this.logger.info('Project configuration updated', { instanceId });
+
             // Provision Cloudflare resources if template has placeholders
+            this.logger.info('Provisioning Cloudflare resources', { instanceId });
             const resourceProvisioningResult = await this.provisionTemplateResources(instanceId, projectName);
             if (!resourceProvisioningResult.success && resourceProvisioningResult.failed.length > 0) {
                 this.logger.warn(`Some resources failed to provision for ${instanceId}, but continuing setup process`);
             }
+            this.logger.info('Resource provisioning completed', { instanceId });
             
             // Store wrangler.jsonc configuration in KV after resource provisioning
             try {
@@ -802,28 +808,35 @@ export class SandboxSdkClient extends BaseSandboxService {
                 this.logger.warn('Failed to store wrangler config in KV', { instanceId, error: error instanceof Error ? error.message : 'Unknown error' });
                 // Non-blocking - continue with setup
             }
-            
-            // Allocate single port for both dev server and tunnel
-            const allocatedPort = await this.allocateAvailablePort();
 
-            this.logger.info('Installing dependencies', { instanceId });
-            const installResult = await this.executeCommand(instanceId, `bun install`);
-            this.logger.info('Dependencies installed', { instanceId });
-                
+            // Allocate single port for both dev server and tunnel
+            this.logger.info('Allocating port', { instanceId });
+            const allocatedPort = await this.allocateAvailablePort();
+            this.logger.info('Port allocated', { instanceId, port: allocatedPort });
+
+            this.logger.info('Installing dependencies (timeout: 40s)', { instanceId });
+            const installResult = await this.executeCommand(instanceId, `bun install`, 40000);
+
             if (installResult.exitCode === 0) {
+                this.logger.info('Dependencies installed successfully', { instanceId });
                 // Try to start development server in background
                 try {
                     // Initialize git repository
+                    this.logger.info('Initializing git repository', { instanceId });
                     await this.executeCommand(instanceId, `git init`);
                     this.logger.info('Git repository initialized', { instanceId });
+
                     // Start dev server on allocated port
+                    this.logger.info('Starting dev server', { instanceId, port: allocatedPort });
                     const processId = await this.startDevServer(instanceId, allocatedPort);
-                    this.logger.info('Instance created successfully', { instanceId, processId, port: allocatedPort });
-                        
+                    this.logger.info('Dev server started', { instanceId, processId, port: allocatedPort });
+
                     // Expose port and get preview URL (matches official vibesdk approach)
+                    this.logger.info('Exposing port for preview', { instanceId, port: allocatedPort });
                     const previewResult = await sandbox.exposePort(allocatedPort, {
                         hostname: getPreviewDomain(env)
                     });
+                    this.logger.info('Port exposed successfully', { instanceId, url: previewResult.url });
 
                     // Use the URL returned by exposePort - it's already correctly formatted
                     let previewURL = previewResult.url;
@@ -851,16 +864,29 @@ export class SandboxSdkClient extends BaseSandboxService {
                         
                     return { previewURL, tunnelURL: '', processId, allocatedPort };
                 } catch (error) {
-                    this.logger.warn('Failed to start dev server', error);
+                    this.logger.error('Failed to start dev server', {
+                        instanceId,
+                        error: error instanceof Error ? error.message : String(error),
+                        stack: error instanceof Error ? error.stack : undefined
+                    });
                     return undefined;
                 }
             } else {
-                this.logger.warn('Failed to install dependencies', installResult.stderr);
+                this.logger.error('Failed to install dependencies', {
+                    instanceId,
+                    exitCode: installResult.exitCode,
+                    stderr: installResult.stderr,
+                    stdout: installResult.stdout
+                });
             }
         } catch (error) {
-            this.logger.warn('Failed to setup instance', error);
+            this.logger.error('Failed to setup instance', {
+                instanceId,
+                error: error instanceof Error ? error.message : String(error),
+                stack: error instanceof Error ? error.stack : undefined
+            });
         }
-        
+
         return undefined;
     }
 
@@ -912,17 +938,17 @@ export class SandboxSdkClient extends BaseSandboxService {
                 throw new Error(`Failed to move template: ${moveTemplateResult.stderr}`);
             }
             
-            // Add timeout protection like official vibesdk
+            // Add timeout protection with 90 second limit (bun install=40s + dev server start=20s + buffer=30s)
             let timeoutId: ReturnType<typeof setTimeout>;
             const timeoutPromise = new Promise<never>((_, reject) => {
                 timeoutId = setTimeout(() => {
-                    this.logger.warn('Instance creation timed out after 60 seconds', {
+                    this.logger.warn('Instance creation timed out after 90 seconds', {
                         instanceId,
                         templateName,
                         projectName
                     });
                     reject(new Error('Instance creation timed out'));
-                }, 60000);
+                }, 90000);
             });
 
             // Race between setup and timeout
